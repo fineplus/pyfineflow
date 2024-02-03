@@ -1,0 +1,6 @@
+demo/__pycache__/app.cpython-310.pyc
+**.pyc
+/dist
+/build
+/*.egg-info
+/.idea
