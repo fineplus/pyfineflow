@@ -64,6 +64,14 @@ def parse_vue(code: str) -> Component:
     return {}
 
 
+def get_name(return_annotation):
+    if hasattr(return_annotation, "_name"):
+        return getattr(return_annotation, "_name")
+    if hasattr(return_annotation, "__name__"):
+        return getattr(return_annotation, "__name__")
+    return "Any"
+
+
 def parse_func_info(fun: Callable) -> (str, List[Input], List[Output]):
     signature = inspect.signature(fun)
     parameters = signature.parameters
@@ -77,19 +85,19 @@ def parse_func_info(fun: Callable) -> (str, List[Input], List[Output]):
             "key": key,
             "name": key,
             "default": param.default if param.default != inspect._empty else None,
-            "useServer": is_use_server(param.annotation.__name__),
-            "config": {"type": type_parse(param.annotation.__name__)}}
+            "useServer": is_use_server(get_name(param.annotation)),
+            "config": {"type": type_parse(get_name(param.annotation))}}
         inputs.append(input_config)
     if signature.return_annotation != inspect._empty:
         if type(signature.return_annotation) in [tuple]:
             for key, item in zip(output_keys, signature.return_annotation):
                 output_config: Output = {"key": key,
                                          "name": key,
-                                         "useServer": is_use_server(item.__name__),
-                                         "config": {"type": type_parse(item.__name__)}}
+                                         "useServer": is_use_server(get_name(item)),
+                                         "config": {"type": type_parse(get_name(item))}}
                 outputs.append(output_config)
         else:
-            type_name = signature.return_annotation.__name__
+            type_name = get_name(signature.return_annotation)
             key = output_keys[0]
             outputs.append({"key": key,
                             "name": key,

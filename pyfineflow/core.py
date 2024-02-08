@@ -204,6 +204,8 @@ class Fine:
             return {'state': 1, 'data': self.nodes, 'mod': self.mod}
 
         print(f"docs:  http://127.0.0.1:{port}{app.docs_url}")
+        print(f"server url:  http://127.0.0.1:{port}/{self.key}")
+        print(f"server key:  {self.key}")
         uvicorn.run(app, log_config=uvicorn_log_config, host=host, port=port)
 
     def create_work(self, work_id):
