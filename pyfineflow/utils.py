@@ -4,6 +4,14 @@ from pathlib import Path
 from typing import Callable, List, Dict
 
 from .schemas import Input, Output, Component
+import hashlib
+
+
+def get_md5_hash(input_string):
+    md5 = hashlib.md5()
+    md5.update(input_string.encode('utf-8'))
+    return md5.hexdigest()
+
 
 type_map = {
     'int': 'integer',
