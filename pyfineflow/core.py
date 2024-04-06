@@ -78,7 +78,7 @@ def marge_list_dict(items_a: List[Dict], items_b: List[Dict]):
         else:
             item.update(items_dict[key])
             items_dict[key] = item
-    return list(items_dict.items())
+    return list(items_dict.values())
 
 
 class Fine:
@@ -124,6 +124,10 @@ class Fine:
             if 'output' in config:
                 del config['output']
             node_conf['input'] = marge_list_dict(config_input, func_inputs)
+            if config_output:
+                for item in config_output:
+                    if 'name' not in item:
+                        item['name'] = item['key']
             node_conf['output'] = marge_list_dict(config_output, func_outputs)
             node_conf['category'] = category
             if 'ui' not in node_conf:
