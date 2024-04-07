@@ -14,6 +14,9 @@ def get_md5_hash(input_string):
 
 
 type_map = {
+    '_empty': 'any',
+    'Any': 'any',
+    'any': 'any',
     'int': 'integer',
     'float': 'float',
     'bool': 'boolean',
