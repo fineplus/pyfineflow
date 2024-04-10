@@ -44,6 +44,11 @@ def add(num1: int, num2: int) -> int:
 def sub(num1: int, num2: int = 2) -> int:
     num = num1 - num2
     return num
+
+
+@fine.node(category='数学运算', name="原路返回")
+def sub(num1: int, num2: int = 2) -> (int, int):
+    return num1, num2
 ```
 
 ```python
