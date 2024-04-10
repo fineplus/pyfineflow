@@ -82,7 +82,8 @@ def marge_list_dict(items_a: List[Dict], items_b: List[Dict]):
 
 
 class Fine:
-    def __init__(self, mod: str, key: str = None, github_url=None, des=None, use_ws=False):
+    def __init__(self, mod: str, key: str = None, github_url=None, des=None, use_ws=False, config={}):
+        self.config = config
         if not key:
             if not github_url:
                 raise Exception("need key or github_url")
@@ -217,7 +218,7 @@ class Fine:
 
         @router.post('/get_nodes')
         def get_nodes():
-            return {'state': 1, 'data': self.nodes, 'mod': self.mod}
+            return {'state': 1, 'data': self.nodes, 'mod': self.mod, "config": self.config}
 
         return router
 
@@ -272,7 +273,8 @@ class Fine:
 
 
 class FinePlugins:
-    def __init__(self, use_ws=True):
+    def __init__(self, use_ws=True, config={}):
+        self.config = config
         self.nodes = []
         self.node_conf_map = {}
         self.flows = []
@@ -334,7 +336,7 @@ class FinePlugins:
 
         @router.post('/get_nodes')
         def get_nodes():
-            return {'state': 1, 'data': self.nodes}
+            return {'state': 1, 'data': self.nodes, 'config': self.config}
 
         return router
 
