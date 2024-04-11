@@ -180,9 +180,19 @@ class Fine:
 
         @router.post('/func')
         def func(req: FuncReq):
-            vars = {'params': req.params}
-            exec(f"{req.code}\nres=func(params)", vars)
-            return vars['res']
+            try:
+                vars = {'params': req.params}
+                exec(f"{req.code}\nres=func(params)", vars)
+                return vars['res']
+            except Exception as e:
+                error_traceback = traceback.format_exc()
+                # 将错误信息按行分割成列表
+                traceback_lines = error_traceback.splitlines()
+                # 获取最后五行的错误信息
+                last_five_lines = traceback_lines[-5:]
+                error_str = "\n".join(last_five_lines)
+                print(error_str)
+                return {'state': 0, 'msg': f'{error_str}', 'data': None}
 
         @router.post('/run_node')
         def run_node(req: RunNodeReq):
@@ -298,9 +308,19 @@ class FinePlugins:
 
         @router.post('/func')
         def func(req: FuncReq):
-            vars = {'params': req.params}
-            exec(f"{req.code}\nres=func(params)", vars)
-            return vars['res']
+            try:
+                vars = {'params': req.params}
+                exec(f"{req.code}\nres=func(params)", vars)
+                return {'state': 1, 'msg': f'', 'data': vars['res']}
+            except Exception as e:
+                error_traceback = traceback.format_exc()
+                # 将错误信息按行分割成列表
+                traceback_lines = error_traceback.splitlines()
+                # 获取最后五行的错误信息
+                last_five_lines = traceback_lines[-5:]
+                error_str = "\n".join(last_five_lines)
+                print(error_str)
+                return {'state': 0, 'msg': f'{error_str}', 'data': None}
 
         @router.post('/run_node')
         def run_node(req: RunNodeReq):
