@@ -46,8 +46,8 @@ def sub(num1: int, num2: int = 2) -> int:
     return num
 
 
-@fine.node(category='数学运算', name="原路返回")
-def sub(num1: int, num2: int = 2) -> (int, int):
+@fine.node(category='数学运算')
+def 原路返回(num1: int, num2: int = 2) -> (int, int):
     return num1, num2
 ```
 
