@@ -254,6 +254,8 @@ class Fine:
             user_server = item.get('useServer', False)
             value = item['value']
             if user_server:
+                if not value:
+                    raise Exception(f'input param:"{key}" is unset')
                 value = work.get_out_value_by_index(value)
             kwargs[key] = value
         func.ctx = NodeCtx(work_id, node_id, work)
