@@ -181,7 +181,7 @@ class Fine:
         @router.post('/func')
         def func(req: FuncReq):
             try:
-                vars = {'params': req.params}
+                vars = {'params': req.params, 'help': help}
                 exec(f"{req.code}\nres=func(params)", vars)
                 return vars['res']
             except Exception as e:
@@ -311,7 +311,7 @@ class FinePlugins:
         @router.post('/func')
         def func(req: FuncReq):
             try:
-                vars = {'params': req.params}
+                vars = {'params': req.params, 'help': help}
                 exec(f"{req.code}\nres=func(params)", vars)
                 return {'state': 1, 'msg': f'', 'data': vars['res']}
             except Exception as e:

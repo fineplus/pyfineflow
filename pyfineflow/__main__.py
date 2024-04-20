@@ -32,7 +32,7 @@ def init_func_server(key='py', host="127.0.0.1", port=8083):
     @app.post(f'/{key}/func')
     def func(req: FuncReq):
         try:
-            vars = {'params': req.params}
+            vars = {'params': req.params,'help': help}
             exec(f"{req.code}\nres=func(params)", vars)
             return {'state': 1, 'msg': f'', 'data': vars['res']}
         except Exception as e:
