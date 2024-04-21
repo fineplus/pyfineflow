@@ -182,7 +182,7 @@ class Fine:
         def func(req: FuncReq):
             try:
                 vars = {'params': req.params, 'help': help}
-                exec(f"{req.code}\nres=func(params)", vars)
+                exec(f"{req.code}\nres=func(params)", globals(), vars)
                 return vars['res']
             except Exception as e:
                 error_traceback = traceback.format_exc()
@@ -312,7 +312,7 @@ class FinePlugins:
         def func(req: FuncReq):
             try:
                 vars = {'params': req.params, 'help': help}
-                exec(f"{req.code}\nres=func(params)", vars)
+                exec(f"{req.code}\nres=func(params)", globals(), vars)
                 return {'state': 1, 'msg': f'', 'data': vars['res']}
             except Exception as e:
                 error_traceback = traceback.format_exc()
